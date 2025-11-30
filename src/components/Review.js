@@ -40,24 +40,20 @@ const Review = () => {
     },
   ];
 const[index, setIndex] = useState(0);
-const[isnext, setIsnext] = useState(true);
-const[isprev, setIsprev] = useState(false);
 
 function handleNext(){
   if(index==reviews.length-1){
-    setIsnext(false);
+    setIndex(0);
     return;
   }
-  setIsprev(true);
-  setIndex(index+1);
+  else setIndex(index+1);
 }
 
 function handlePrev(){
   if(index==0){
-    setIsprev(false);
+    setIndex(reviews.length-1);
     return;
   }
-  setIsnext(true);
   setIndex(index-1);
 }
 
@@ -67,11 +63,8 @@ function handleRandom(){
 newind = Math.floor(Math.random()*reviews.length);
   }
 setIndex(newind);
- setIsprev(newind !== 0);
- setIsnext(newind !== reviews.length - 1);
 }
   return (
-    <>
             <div className='review'>
       <p className='author' id={`author-${reviews[index].id}`}>
         {reviews[index].name}
@@ -79,12 +72,10 @@ setIndex(newind);
       <p className='job'>{reviews[index].job}</p>
       <p className='info'>{reviews[index].text}</p>
       <img className='person-img' src={reviews[index].image} />
-
-      {isprev && <button className='prev-btn' onClick={handlePrev}>Previous</button>}
-      {isnext && <button className='next-btn' onClick={handleNext}>Next</button>}
+      <button className='prev-btn' onClick={handlePrev}>Previous</button>
+      <button className='next-btn' onClick={handleNext}>Next</button>
       <button className='random-btn' onClick={handleRandom}>Surprise me</button>
     </div>
-    </>
   )
 };
 
