@@ -74,7 +74,7 @@ setIndex(newind);
       <img className='person-img' src={reviews[index].image} />
       <button className='prev-btn' onClick={handlePrev}>Previous</button>
       <button className='next-btn' onClick={handleNext}>Next</button>
-      <button className='random-btn' onClick={handleRandom}>Surprise me</button>
+      <button className='random-btn' onClick={handleRandom}>surprise me</button>
     </div>
   )
 };
