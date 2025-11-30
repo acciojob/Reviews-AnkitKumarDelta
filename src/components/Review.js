@@ -39,62 +39,50 @@ const Review = () => {
         'Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic.',
     },
   ];
+const[index, setIndex] = useState(0);
+const[isnext, setIsnext] = useState(true);
+const[isprev, setIsprev] = useState(true);
 
-  // index in reviews array (0-based)
-  const [index, setIndex] = useState(0);
-
-  const current = reviews[index];
-
-  // go to next review (wrap-around)
-  function handleNext() {
-    setIndex((prev) => (prev + 1) % reviews.length);
+function handleNext(){
+  if(index==index.length-1){
+    setIsnext(false);
   }
+  setIndex(index+1);
+}
 
-  // go to previous review (wrap-around)
-  function handlePrev() {
-    setIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+function handlePrev(){
+  if(index==0){
+    setIsprev(false);
   }
+  setIndex(index-1);
+}
 
-  // surprise me -> pick a random index different from current
-  function handleRandom() {
-    if (reviews.length <= 1) return;
-    let rand;
-    do {
-      rand = Math.floor(Math.random() * reviews.length);
-    } while (rand === index);
-    setIndex(rand);
+function handleRandom(){
+  let newind = Math.floor(Math.random()*reviews.length);
+  while(newind==index){
+newind = Math.floor(Math.random()*reviews.length);
   }
-
+setIndex(newind);
+}
   return (
-    <article className="review" aria-live="polite">
-      <img src={current.image} alt={current.name} className="person-img" />
-
-      {/* author must have id formatted as author-<id> */}
-      <h4 className="author" id={`author-${current.id}`}>
-        {current.name}
-      </h4>
-
-      <p className="job">{current.job}</p>
-
-      <p className="info">{current.text}</p>
-
-      <div style={{ marginTop: 12 }}>
-        <button className="prev-btn" onClick={handlePrev} aria-label="Previous review">
-          Prev
-        </button>
-
-        <button className="next-btn" onClick={handleNext} aria-label="Next review" style={{ marginLeft: 8 }}>
-          Next
-        </button>
-      </div>
-
-      <div style={{ marginTop: 10 }}>
-        <button className="random-btn" onClick={handleRandom}>
-          surprise me
-        </button>
-      </div>
-    </article>
-  );
+    <>
+            <div className='review'>
+              <p className = 'author' id={`author-${reviews[index].id}`} >{reviews[index].name}</p>
+              <p className='job'>{reviews[index].job}</p>
+              <p className='info'>{reviews[index].text}</p>
+              <img className='person-img' src={reviews[index].image} alt="review image"/>
+              {
+                isprev &&
+                <button className='prev-btn' onClick={handlePrev}>Previous</button>
+              }
+              {
+                isnext &&
+                <button className='next-btn' onClick={handleNext}>Next</button>
+              }
+              <button className='random-btn' onClick={handleRandom}>Random</button>
+            </div>
+    </>
+  )
 };
 
 export default Review;
